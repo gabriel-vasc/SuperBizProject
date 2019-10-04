@@ -15,6 +15,19 @@
 
         <?php require_once 'process.php' ?>
 
+        <?php
+            
+            if (isset($_SESSION['message'])): ?>
+
+            <div class="alert alert-<?=$_SESSION['msg_type']?>">
+
+            <?php
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+            ?> 
+            </div>
+            <?php endif ?>
+
         <div class="container">
 
             <?php
@@ -62,22 +75,26 @@
 
             <div class="row justify-content-center">
                 <form action="process.php" method="POST">
+                    <input type="hidden" name="id" value=<?php echo $id; ?>>
                     <div class="form-group">
                         <label for="nome">Nome:</label>
-                        <input type="text" name="nome" class="form-control" placeholder="Insira seu nome." value="Gabriel Serra Vasconcelos">
+                        <input type="text" name="nome" class="form-control" 
+                            value="<?php echo $nome; ?>" placeholder="Insira seu nome.">
                     </div>
                     <div class="form-group">
                         <label for="e_mail">E-mail:</label>
-                        <input type="email" name="e_mail" class="form-control" placeholder="Insira seu e-mail." value="gabrielvasc98@outlook.com">
+                        <input type="email" name="e_mail" class="form-control" 
+                            value="<?php echo $e_mail; ?>" placeholder="Insira seu e-mail.">
                     </div>
                     <div class="form-group">
                         <label for="telefone">Telefone:</label>
-                        <input type="text" name="telefone" class="form-control" placeholder="Insira seu telefone." value="+5567996922272">
+                        <input type="text" name="telefone" class="form-control" 
+                            value="<?php echo $telefone; ?>" placeholder="Insira seu telefone.">
                     </div>
                     <div class="form-group">
                         <label for="sexo">Sexo:</label>
-                        <select name="sexo" id="sexo" class="form-control" >
-                            <option value="">-selecione-</option>
+                        <select name="sexo" id="sexo" class="form-control">
+                            <option value="<?php echo $sexo; ?>"><?php echo $sexo; ?></option>
                             <option value="masculino">Masculino</option>
                             <option value="feminino">Feminino</option>
                             <option value="outro">Outro</option>
@@ -85,15 +102,25 @@
                     </div>
                     <div class="form-group">
                         <label for="dataNasc">Data de Nascimento</label>
-                        <input type="date" name="dataNasc" class="form-control" placeholder="Insira sua data de nascimento." value='20/02/1998'>
+                        <input type="date" name="dataNasc" class="form-control" 
+                            value="<?php echo $dataNasc; ?>">
 
                     </div>
                     <div class="form-group">
                         <label for="obs">Observações:</label>
-                        <input type="text" name="obs" class="form-control" placeholder="Insirir observações." value="Nada.">
+                        <input type="text" name="obs" class="form-control" 
+                            value="<?php echo $obs; ?>" placeholder="Insirir observações.">
                     </div>
+
+
                     <div class="form-group">
+                    <?php 
+                    if ($update == true):
+                    ?>
+                        <button type="submit" name="atualizar"class="btn btn-info">Atualizar</button>
+                    <?php else: ?>
                         <button type="submit" name="salvar"class="btn btn-primary">Salvar</button>
+                    <?php endif; ?>
                     </div>
                 </form>
             </div>
