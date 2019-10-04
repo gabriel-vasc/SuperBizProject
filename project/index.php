@@ -34,8 +34,8 @@
                 $mysqli = new mysqli('localhost','root','','crudDB') or die(mysqli_error($mysqli));
                 $resultado = $mysqli->query("SELECT * FROM data") or die($mysqli->error);
 
-                if (isset($_GET['busca']) && ($_GET['busca'] != '')):
-                    $busca = $_GET['busca'];
+                if (isset($_POST['busca']) && ($_POST['busca'] != '')):
+                    $busca = $_POST['busca'];
                     $resultado = $mysqli->query(
                         "SELECT * FROM data WHERE (nome LIKE '%".$busca."%') OR (e_mail LIKE '%".$busca."%')"
                     ) or die($mysqli->error);
@@ -82,7 +82,7 @@
             ?>
 
             <div class="row justify-content-center">
-                <form action="index.php" method="GET">
+                <form action="index.php" method="POST">
                     <div class="form-group">
                         <label for="busca">Pesquisa:</label>
                         <input type="text" name="busca" class="form-control" placeholder="Busque por nome ou email.">
