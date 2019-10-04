@@ -33,8 +33,16 @@
             <?php
                 $mysqli = new mysqli('localhost','root','','crudDB') or die(mysqli_error($mysqli));
                 $resultado = $mysqli->query("SELECT * FROM data") or die($mysqli->error);
-                //pre_r($resultado);
+
+                if (isset($_GET['busca']) && ($_GET['busca'] != '')):
+                    $busca = $_GET['busca'];
+                    $resultado = $mysqli->query(
+                        "SELECT * FROM data WHERE (nome LIKE '%".$busca."%') OR (e_mail LIKE '%".$busca."%')"
+                    ) or die($mysqli->error);
                 ?>
+                    <h1>Resultados da busca:</h1>
+                    <a href="index.php" class="navbar-link">Voltar</a>      
+                <?php endif; ?>
 
                 <div class="row justify-content-center">
                     <table class="table">
@@ -74,6 +82,18 @@
             ?>
 
             <div class="row justify-content-center">
+                <form action="index.php" method="GET">
+                    <div class="form-group">
+                        <label for="busca">Pesquisa:</label>
+                        <input type="text" name="busca" class="form-control" placeholder="Busque por nome ou email.">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row justify-content-center">
                 <form action="process.php" method="POST">
                     <input type="hidden" name="id" value=<?php echo $id; ?>>
                     <div class="form-group">
@@ -111,8 +131,6 @@
                         <input type="text" name="obs" class="form-control" 
                             value="<?php echo $obs; ?>" placeholder="Insirir observações.">
                     </div>
-
-
                     <div class="form-group">
                     <?php 
                     if ($update == true):
